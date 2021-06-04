@@ -1,7 +1,7 @@
-import discord
-import re
+import discord, re, random
 
 patterns = "(iam|i'm|i am|im)\s(\S*)\s?((\S*)?)"
+replies = ["Hello ", "Nice to meet you "]
 
 client = discord.Client()
 
@@ -20,7 +20,7 @@ async def on_message(message):
 
     if len(filtered) == 4:
         name = f"{filtered[1]} {filtered[2]}" if filtered[2] != "" else f"{filtered[1]}"
-        await message.channel.send(f"Nice to meet you, {name}. I'm {botName}")
+        await message.channel.send(f"{random.randint(0, len(replies) - 1)}, {name}. I'm {botName}")
 
 
 client.run("")
