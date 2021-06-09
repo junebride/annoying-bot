@@ -1,9 +1,13 @@
-import discord, re, random
+import discord, re, random, os
+from dotenv import load_dotenv
 
-patterns = "(iam|i'm|i am|im)\s(\S*)\s?((\S*)?)"
-replies = ["Hello ", "Nice to meet you "]
+load_dotenv()
 
 client = discord.Client()
+TOKEN = os.getenv("DISCORD_TOKEN")
+
+patterns = "(?:i\s*(?:m*|am|'m))\s(\w*)\s?(?:(\w*)?)"
+replies = ["Hello", "Nice to meet you "]
 
 @client.event
 async def on_ready():
@@ -16,11 +20,13 @@ async def on_message(message):
 
     content = message.content.lower()
     botName = str(client.user)[:str(client.user).find("#")]
-    filtered = re.findall(patterns, content)[0]
+    regexSearch = re.search(patterns, content)
 
-    if len(filtered) == 4:
-        name = f"{filtered[1]} {filtered[2]}" if filtered[2] != "" else f"{filtered[1]}"
-        await message.channel.send(f"{random.randint(0, len(replies) - 1)}, {name}. I'm {botName}")
+    if regexSearch != None:
+        regexGroup = regexSearch.groups()
+        name = f"{regexGroup[0]} {regexGroup[1]}" if regexGroup[1] != "" else f"{regexGroup[0]}"
+        reply = replies[random.randint(0, len(replies) - 1)]
+        await message.channel.send(f"{reply}, {name}. I'm {botName}")
 
 
-client.run("")
+client.run(TOKEN)
