@@ -1,6 +1,6 @@
 # Annoying-bot
 
-On writing a message such as "i am so tired", dad bot will reply with "Nice to meet you so tired, I'm dad bot"
+On writing a message such as "i am so tired", annoying bot will reply with "Nice to meet you so tired, I'm annoying bot"
 
 1. create virtual environment `py -m venv venv`
 2. add client api id
